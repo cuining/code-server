@@ -86,9 +86,9 @@ router.post("/", async (req, res) => {
     const passwordMethod = getPasswordMethod(hashedPasswordFromArgs)
     const { isPasswordValid, hashedPassword } = await handlePasswordValidation({
       passwordMethod,
+      hashedPasswordFromArgs,
       passwordFromRequestBody: password,
       passwordFromArgs: req.args.password,
-      hashedPasswordFromArgs: hashedPasswordFromArgs,
     })
 
     if (isPasswordValid) {
