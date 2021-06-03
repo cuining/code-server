@@ -289,8 +289,7 @@ export const parse = (
       let key: keyof Args | undefined
       let value: string | undefined
       if (arg.startsWith("--")) {
-        // TODO fix this
-        const split = arg.replace(/^--/, "").split("=", 2)
+        const split = splitOnFirstEquals(arg.replace(/^--/, ""))
         key = split[0] as keyof Args
         value = split[1]
       } else {
@@ -563,7 +562,6 @@ export function parseConfigFile(configFile: string, configPath: string): ConfigA
   const config = yaml.load(configFile, {
     filename: configPath,
   })
-  console.log("what is this config", config)
   if (!config || typeof config === "string") {
     throw new Error(`invalid config: ${config}`)
   }
@@ -576,11 +574,9 @@ export function parseConfigFile(configFile: string, configPath: string): ConfigA
     }
     return `--${optName}=${opt}`
   })
-  console.log("what are the configFileArgv", configFileArgv)
   const args = parse(configFileArgv, {
     configFile: configPath,
   })
-  console.log(args, "args")
   return {
     ...args,
     config: configPath,

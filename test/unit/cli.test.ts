@@ -349,6 +349,21 @@ describe("parser", () => {
       ],
     })
   })
+  it("should parse options with double-dash and multiple equal signs ", async () => {
+    const args = parse(
+      [
+        "--hashed-password=$argon2i$v=19$m=4096,t=3,p=1$0qr/o+0t00hsbjfqcksfdq$ofcm4rl6o+b7oxpua4qlxubypbbpsf+8l531u7p9hyy",
+      ],
+      {
+        configFile: "/pathtoconfig",
+      },
+    )
+    expect(args).toEqual({
+      _: [],
+      "hashed-password":
+        "$argon2i$v=19$m=4096,t=3,p=1$0qr/o+0t00hsbjfqcksfdq$ofcm4rl6o+b7oxpua4qlxubypbbpsf+8l531u7p9hyy",
+    })
+  })
 })
 
 describe("cli", () => {
